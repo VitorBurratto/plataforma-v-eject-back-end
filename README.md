@@ -33,11 +33,11 @@ A estrutura básica do projeto está organizada da seguinte forma:
 
 1. Clone o repositório:
 
-`git clone https://github.com/VitorBurratto/mini-plataforma-x-eject-back-end.git`
+`git clone https://github.com/VitorBurratto/mini-plataforma-v-eject-back-end.git`
 
 2. Entre no diretório:
 
-`cd mini-plataforma-x-eject-back-end`
+`cd mini-plataforma-v-eject-back-end`
 
 3. Crie a venv:
 
