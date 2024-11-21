@@ -1,3 +1,5 @@
+from rest_framework.authentication import BasicAuthentication
+from rest_framework.permissions import IsAuthenticated
 from rest_framework import viewsets, generics
 from plataformav.models import Account, Post, PostFeed, Comment
 from plataformav.serializers import AccountSerializer, PostSerializer, PostFeedSerializer, CommentSerializer
