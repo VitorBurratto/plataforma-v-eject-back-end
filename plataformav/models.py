@@ -12,7 +12,6 @@ class Account(models.Model):
     def __str__(self):
         return self.name
 
-
 class Post(models.Model):
     IMAGEPOST = (
         ('I', 'Somente Imagem'),
@@ -25,18 +24,15 @@ class Post(models.Model):
     image = models.CharField(max_length=5, choices=IMAGEPOST, blank=False, null=False, default='I')
     account = models.ForeignKey(Account, on_delete=models.CASCADE, null=True, related_name='posts')
 
-
     def __str__(self):
         return self.code
-
 
 class PostFeed(models.Model):
     account = models.ForeignKey(Account, on_delete=models.CASCADE)
     post = models.ForeignKey(Post, on_delete=models.CASCADE)
 
     def __str__(self):
-        return f"Post Feed para {self.account.name}"
-    
+        return self.account
 
 class Comment(models.Model):
     post = models.ForeignKey(Post, on_delete=models.CASCADE, related_name='comments')
@@ -46,7 +42,6 @@ class Comment(models.Model):
 
     def __str__(self):
         return f"Comentário de {self.account.name} no Post {self.post.code}"
-
 
 # Sinal para criar um PostFeed automaticamente quando um novo Post é criado
 @receiver(post_save, sender=Post)

@@ -7,21 +7,20 @@ class AccountAdmin(admin.ModelAdmin):
     list_per_page = 20
     search_fields = ('name',)
 
-admin.site.register(Account, AccountAdmin)  
-
+admin.site.register(Account, AccountAdmin)
 
 class PostAdmin(admin.ModelAdmin):
     list_display = ('id', 'code', 'description', 'account')
     list_display_links = ('id', 'code')
     search_fields = ('code',)
 
-admin.site.register(Post, PostAdmin) 
+admin.site.register(Post, PostAdmin)
 
 
 class PostFeedAdmin(admin.ModelAdmin):
     list_display = ('id', 'account', 'post')
 
-admin.site.register(PostFeed, PostFeedAdmin) 
+admin.site.register(PostFeed, PostFeedAdmin)
 
 
 class CommentAdmin(admin.ModelAdmin):
@@ -29,4 +28,4 @@ class CommentAdmin(admin.ModelAdmin):
     search_fields = ('content',)
     list_filter = ('createdAt',)
 
-admin.site.register(Comment, CommentAdmin) 
+admin.site.register(Comment, CommentAdmin)
