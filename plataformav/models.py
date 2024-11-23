@@ -23,6 +23,7 @@ class Post(models.Model):
     description = models.CharField(max_length=100, blank=False, verbose_name='Descrição')
     image = models.CharField(max_length=5, choices=IMAGEPOST, blank=False, null=False, default='I')
     account = models.ForeignKey(Account, on_delete=models.CASCADE, null=True, related_name='posts')
+    likes = models.PositiveIntegerField(default=0)
 
     def __str__(self):
         return self.code
