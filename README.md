@@ -31,17 +31,27 @@ O back-end foi construído utilizando as seguintes tecnologias:
 A estrutura básica do projeto está organizada da seguinte forma:
 
 plataforma-backend/ 
-├── plataformav/ # Diretório principal do app │ 
-├── migrations/ # Migrações do banco de dados │ 
-├── init.py  │ 
-├── admin.py # Configurações do admin do Django │ 
-├── apps.py │ 
-├── models.py # Modelos de dados (usuarios, postagens, comentários, etc.) │ 
-├── serializers.py # Serializadores da API │ 
-├── views.py # Visões para a API │ 
-├── pagination.py # Configuração de paginação │ 
-├── manage.py # Script de gerenciamento do Django │ 
-└── requirements.txt # Dependências do projeto │ 
+├── plataformav/ # Diretório principal do app 
+
+├── migrations/ # Migrações do banco de dados 
+
+├── init.py  
+
+├── admin.py # Configurações do admin do Django 
+
+├── apps.py 
+
+├── models.py # Modelos de dados (usuarios, postagens, comentários, etc.) 
+
+├── serializers.py # Serializadores da API 
+
+├── views.py # Visões para a API 
+
+├── pagination.py # Configuração de paginação 
+
+├── manage.py # Script de gerenciamento do Django 
+
+└── requirements.txt # Dependências do projeto
 
 
 ### Principais Modelos
