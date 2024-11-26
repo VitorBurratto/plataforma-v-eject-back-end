@@ -31,6 +31,7 @@ O back-end foi construído utilizando as seguintes tecnologias:
 A estrutura básica do projeto está organizada da seguinte forma:
 
 plataforma-backend/ 
+
 ├── plataformav/ # Diretório principal do app 
 
 ├── migrations/ # Migrações do banco de dados 
