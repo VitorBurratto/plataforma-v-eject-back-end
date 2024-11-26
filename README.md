@@ -1,7 +1,5 @@
 <h1 align="center"> plataforma back-end - EJECT </h1>
 
-![Imagem de capa - plataforma back-end]()
-
 Este projeto consiste no desenvolvimento do back-end de uma API para uma plataforma de mídia social. O sistema é utilizado para gerenciar usuários, postagens, feeds e comentários, proporcionando funcionalidades típicas de uma plataforma social. O projeto foi desenvolvido como parte do treinamento e nivelamento dos trainees da Empresa Júnior da Escola de Ciências e Tecnologia da UFRN (EJECT).
 
 
