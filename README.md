@@ -1,7 +1,5 @@
 <h1 align="center"> plataforma back-end - EJECT </h1>
 
-![Imagem de capa - plataforma back-end]()
-
 Este projeto consiste no desenvolvimento do back-end de uma API para uma plataforma de mídia social. O sistema é utilizado para gerenciar usuários, postagens, feeds e comentários, proporcionando funcionalidades típicas de uma plataforma social. O projeto foi desenvolvido como parte do treinamento e nivelamento dos trainees da Empresa Júnior da Escola de Ciências e Tecnologia da UFRN (EJECT).
 
 
@@ -102,6 +100,38 @@ plataforma-backend/
 8. Acesse o projeto:
 
 `http://127.0.0.1:8000/`
+
+
+## 🔑 Endpoints da API
+
+Aqui estão as rotas principais da API:
+
+POST: http://127.0.0.1:8000/posts/<post_id>/like/
+Ação: Adicionar um "like" à postagem especificada.
+
+GET: http://127.0.0.1:8000/accounts/<account_id>/postfeeds/
+Ação: Recuperar o feed de postagens de um usuário específico.
+
+GET: http://127.0.0.1:8000/comments/
+Ação: Recuperar todos os comentários da plataforma.
+
+GET: http://127.0.0.1:8000/postfeeds/
+Ação: Recuperar todas as postagens do feed.
+
+GET: http://127.0.0.1:8000/posts/
+Ação: Recuperar todas as postagens.
+
+GET: http://127.0.0.1:8000/accounts/
+Ação: Recuperar todos os usuários.
+
+GET: http://127.0.0.1:8000/
+Ação: Página inicial da API.
+
+POST: http://127.0.0.1:8000/token/
+Ação: Gerar um token JWT para autenticação.
+
+POST: http://127.0.0.1:8000/token/refresh/
+Ação: Atualizar o token JWT.
 
 
 ## ✔️ Testes
