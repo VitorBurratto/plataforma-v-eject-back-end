@@ -16,7 +16,6 @@ class PostAdmin(admin.ModelAdmin):
 
 admin.site.register(Post, PostAdmin)
 
-
 class PostFeedAdmin(admin.ModelAdmin):
     list_display = ('id', 'account', 'post')
 

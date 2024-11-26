@@ -23,7 +23,7 @@ class ListPostFeedSerializer(serializers.ModelSerializer):
         model = PostFeed
         fields = ['account', 'post']
     def get_post(self,obj):
-        return obj.get.post_display
+         return obj.post.get_post_display()
 
 class CommentSerializer(serializers.ModelSerializer):
     class Meta:

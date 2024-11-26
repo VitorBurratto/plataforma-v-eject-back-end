@@ -1,4 +1,3 @@
-#from rest_framework.permissions import IsAuthenticated 
 from rest_framework import viewsets, generics
 from plataformav.models import Account, Post, PostFeed, Comment
 from plataformav.serializers import AccountSerializer, PostSerializer, PostFeedSerializer, CommentSerializer
@@ -9,12 +8,10 @@ from plataformav.pagination import FeedPagination
 class AccountViewSet(viewsets.ModelViewSet):
     queryset = Account.objects.all()
     serializer_class = AccountSerializer
-    #permission_classes = [IsAuthenticated,] 
 
 class PostViewSet(viewsets.ModelViewSet):
     queryset = Post.objects.all()
-    serializer_class = PostSerializer 
-    #permission_classes = [IsAuthenticated,]
+    serializer_class = PostSerializer
     
     @action(detail=True, methods=['post'])
     def like(self, request, pk=None):
@@ -24,15 +21,12 @@ class PostViewSet(viewsets.ModelViewSet):
         
         return Response({'status': 'post liked', 'likes': post.likes})
 
-
 class PostFeedViewSet(viewsets.ModelViewSet):
     queryset = PostFeed.objects.all()
     serializer_class = PostFeedSerializer
-    #permission_classes = [IsAuthenticated,]
 
 class ListPostFeedView(generics.ListAPIView):
     serializer_class = PostFeedSerializer
-    #permission_classes = [IsAuthenticated,]
 
     def get_queryset(self):
         return PostFeed.objects.filter(account_id=self.kwargs['pk'])
@@ -40,10 +34,8 @@ class ListPostFeedView(generics.ListAPIView):
 class CommentViewSet(viewsets.ModelViewSet):
     queryset = Comment.objects.all()
     serializer_class = CommentSerializer
-    #permission_classes = [IsAuthenticated,] 
 
 class PostFeedViewSet(viewsets.ModelViewSet):
     queryset = PostFeed.objects.all()
     serializer_class = PostFeedSerializer
     pagination_class = FeedPagination
-    #permission_classes = [IsAuthenticated,] 
