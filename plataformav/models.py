@@ -1,29 +1,54 @@
 from django.db import models
 from django.db.models.signals import post_save
 from django.dispatch import receiver
+from django.contrib.auth.models import User, Group
 import random
 import string
 
 class Account(models.Model):
-    name = models.CharField(max_length=100, verbose_name='Nome de Usuário')
+    user = models.OneToOneField(User, on_delete=models.CASCADE, null=True, blank=True, editable=False)
+    adminUsername = models.CharField(max_length=150, verbose_name='Nome de Usuário Admin', blank=True, null=True)
+    password = models.CharField(max_length=128, verbose_name='Senha do Superusuário', blank=False)
+    name = models.CharField(max_length=100, verbose_name='Nome do Perfil do Usuário')
     email = models.EmailField(blank=False, max_length=40, verbose_name='Email do Usuário')
     cpf = models.CharField(max_length=11, verbose_name='CPF do Usuário')
     dateBirth = models.DateTimeField(verbose_name='Data de Nascimento do Usuário')
     cellphone = models.CharField(max_length=14, verbose_name='Celular do Usuário')
 
     def __str__(self):
-        return self.name
+        return self.adminUsername 
 
+def create_user_for_account(account):
+    group_name = 'Commons Users'
+    group, created = Group.objects.get_or_create(name=group_name)
+
+    username = account.email
+    if User.objects.filter(username=username).exists():
+        username = f"{account.email.split('@')[0]}_{random.randint(1000, 9999)}" 
+    user = User.objects.create_user(
+        username=username, 
+        password=account.password,
+        email=account.email  
+    )
+
+    account.user = user  # Associa o usuário à conta
+    account.save()  # Salva a conta com o usuário
+
+    user.groups.add(group)  # Adiciona o usuário ao grupo "Commons Users"
+    user.save()  # Salva o usuário
+    
 class Post(models.Model):
     postTypeChoices = (
         ('I', 'Somente Imagem'),
+        ('I+C', 'Imagem e Comentários'),
         ('I+D', 'Imagem e Descrição'),
+        ('D+C', 'Descrição e Comentários'),
         ('I+D+C', 'Imagem, Descrição e Comentários'),
     )
     
     code = models.CharField(max_length=10, verbose_name='Código', blank=True, editable=False)
     description = models.CharField(max_length=100, blank=True, verbose_name='Descrição')
-    image = models.ImageField(upload_to='post_images/', verbose_name='Imagem')
+    image = models.ImageField(upload_to='post_images/', verbose_name='Imagem', blank=True)
     postType = models.CharField(max_length=5, choices=postTypeChoices, default='I', verbose_name='Tipo de Post')
     account = models.ForeignKey(Account, on_delete=models.CASCADE, null=True, related_name='posts')
     likes = models.PositiveIntegerField(default=0, editable=False)
@@ -38,8 +63,8 @@ class Post(models.Model):
         super().save(*args, **kwargs)  # Chama o save original do Django para salvar o post
 
 class PostFeed(models.Model):
-    account = models.ForeignKey(Account, on_delete=models.CASCADE)
-    post = models.ForeignKey(Post, on_delete=models.CASCADE)
+    account = models.ForeignKey(Account, on_delete=models.CASCADE, editable=False)
+    post = models.ForeignKey(Post, on_delete=models.CASCADE, editable=False)
 
     def __str__(self):
         return str(self.account)
