@@ -121,11 +121,11 @@ O projeto inclui testes unitários para verificar o funcionamentos correto das p
 
 `python manage.py test`
 
-Autenticação de Usuários: Testes para verificar o registro de novos usuários, login e geração de tokens JWT.
-CRUD de Postagens: Testes para criação, edição, exclusão e recuperação de postagens.
-Comentários: Verificação da criação e edição de comentários em postagens.
-Paginação no Feed: Testes para garantir que a paginação funciona conforme esperado no endpoint do feed.
-Permissões: Testes para verificar se as ações de edição e exclusão são limitadas aos autores das postagens/comentários.
+- Autenticação de Usuários: Testes para verificar o registro de novos usuários, login e geração de tokens JWT.
+- CRUD de Postagens: Testes para criação, edição, exclusão e recuperação de postagens.
+- Comentários: Verificação da criação e edição de comentários em postagens.
+- Paginação no Feed: Testes para garantir que a paginação funciona conforme esperado no endpoint do feed.
+- Permissões: Testes para verificar se as ações de edição e exclusão são limitadas aos autores das postagens/comentários.
 
 
 ## 🧑‍💻Autores
