@@ -4,15 +4,21 @@ from plataformav.serializers import AccountSerializer, PostSerializer, PostFeedS
 from rest_framework.decorators import action
 from rest_framework.response import Response
 from plataformav.pagination import FeedPagination
-from .models import create_user_for_account
+from rest_framework import viewsets
+from .permissions import IsAccountOwner
 
 class AccountViewSet(viewsets.ModelViewSet):
-    queryset = Account.objects.all().order_by("id")
+    queryset = Account.objects.all()
     serializer_class = AccountSerializer
+    permission_classes = [IsAccountOwner]
+
+    def get_queryset(self):
+        # Retorna a conta do usuário logado com base no ID passado na URL
+        return Account.objects.filter(user=self.request.user)
 
     def perform_create(self, serializer):
-        account = serializer.save()
-        create_user_for_account(account) 
+        # Quando a conta é criada, associamos ao usuário logado
+        serializer.save(user=self.request.user)
 
 class PostViewSet(viewsets.ModelViewSet):
     queryset = Post.objects.all().order_by("id")

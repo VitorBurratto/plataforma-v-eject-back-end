@@ -4,10 +4,21 @@ from django.contrib.auth.admin import UserAdmin
 from plataformav.models import Account, Post, PostFeed, Comment
 
 class AccountAdmin(admin.ModelAdmin):
-    list_display = ('id', 'name', 'email', 'cpf', 'dateBirth', 'cellphone')
-    list_display_links = ('id', 'name')
-    list_per_page = 20
-    search_fields = ('name',)
+#faz com que o Account só tenha acesso ao seu próprio Id e não posso modificar os dos outros
+    def get_queryset(self, request):
+        qs = super().get_queryset(request)
+        # Limita os resultados no Admin para o usuário logado
+        return qs.filter(user=request.user)
+
+    def has_change_permission(self, request, obj=None):
+        if obj is not None and obj.user != request.user:
+            return False  # Não permite editar outro account
+        return super().has_change_permission(request, obj)
+
+    def has_delete_permission(self, request, obj=None):
+        if obj is not None and obj.user != request.user:
+            return False  # Não permite deletar outro account
+        return super().has_delete_permission(request, obj)
 
 admin.site.register(Account, AccountAdmin)
 
