@@ -102,6 +102,38 @@ plataforma-backend/
 `http://127.0.0.1:8000/`
 
 
+## 🔑 Endpoints da API
+
+Aqui estão as rotas principais da API:
+
+POST: http://127.0.0.1:8000/posts/<post_id>/like/
+Ação: Adicionar um "like" à postagem especificada.
+
+GET: http://127.0.0.1:8000/accounts/<account_id>/postfeeds/
+Ação: Recuperar o feed de postagens de um usuário específico.
+
+GET: http://127.0.0.1:8000/comments/
+Ação: Recuperar todos os comentários da plataforma.
+
+GET: http://127.0.0.1:8000/postfeeds/
+Ação: Recuperar todas as postagens do feed.
+
+GET: http://127.0.0.1:8000/posts/
+Ação: Recuperar todas as postagens.
+
+GET: http://127.0.0.1:8000/accounts/
+Ação: Recuperar todos os usuários.
+
+GET: http://127.0.0.1:8000/
+Ação: Página inicial da API.
+
+POST: http://127.0.0.1:8000/token/
+Ação: Gerar um token JWT para autenticação.
+
+POST: http://127.0.0.1:8000/token/refresh/
+Ação: Atualizar o token JWT.
+
+
 ## ✔️ Testes
 
 O projeto inclui testes unitários para verificar o funcionamentos correto das principais funcionalidades da API. Para rodar os testes, use o seguinte comando:
