@@ -4,6 +4,7 @@ from django.dispatch import receiver
 from django.contrib.auth.models import User, Group
 import random
 import string
+from django.utils import timezone
 
 class Account(models.Model):
     user = models.OneToOneField(User, on_delete=models.CASCADE, null=True, blank=True, editable=False)
@@ -12,11 +13,11 @@ class Account(models.Model):
     name = models.CharField(max_length=100, verbose_name='Nome do Perfil do Usuário')
     email = models.EmailField(blank=False, max_length=40, verbose_name='Email do Usuário')
     cpf = models.CharField(max_length=11, verbose_name='CPF do Usuário')
-    dateBirth = models.DateTimeField(verbose_name='Data de Nascimento do Usuário')
+    dateBirth = models.DateTimeField(verbose_name='Data de Nascimento do Usuário', default=timezone.now)
     cellphone = models.CharField(max_length=14, verbose_name='Celular do Usuário')
 
     def __str__(self):
-        return self.adminUsername 
+        return self.adminUsername if self.adminUsername else f"Account {self.id}"
 
 def create_user_for_account(account):
     group_name = 'Commons Users'
@@ -31,12 +32,12 @@ def create_user_for_account(account):
         email=account.email  
     )
 
-    account.user = user  # Associa o usuário à conta
-    account.save()  # Salva a conta com o usuário
+    account.user = user
+    account.save()
 
-    user.groups.add(group)  # Adiciona o usuário ao grupo "Commons Users"
-    user.save()  # Salva o usuário
-    
+    user.groups.add(group)
+    user.save()
+
 class Post(models.Model):
     postTypeChoices = (
         ('I', 'Somente Imagem'),
@@ -58,9 +59,9 @@ class Post(models.Model):
         return self.code
 
     def save(self, *args, **kwargs):
-        if not self.code: 
-            self.code = ''.join(random.choices(string.ascii_letters + string.digits, k=10))  # Gera um código aleatório com 10 caracteres
-        super().save(*args, **kwargs)  # Chama o save original do Django para salvar o post
+        if not self.code:
+            self.code = ''.join(random.choices(string.ascii_letters + string.digits, k=10))
+        super().save(*args, **kwargs)
 
 class PostFeed(models.Model):
     account = models.ForeignKey(Account, on_delete=models.CASCADE, editable=False)
@@ -78,7 +79,7 @@ class Comment(models.Model):
     def __str__(self):
         return f"Comentário de {self.account.name} no Post {self.post.code}"
 
-# Sinal para criar um PostFeed automaticamente quando um novo Post é criado
+# Signal to create PostFeed when a Post is created
 @receiver(post_save, sender=Post)
 def createPostFeed(sender, instance, created, **kwargs):
     if created:
