@@ -131,15 +131,15 @@ POST: http://127.0.0.1:8000/accounts/
 
 Ação: Criar uma nova conta (somente para superusuários ou administradores).
 
-GET: http://127.0.0.1:8000/accounts/{id}/
+GET: http://127.0.0.1:8000/accounts/{account_id}/
 
 Ação: Recuperar os detalhes de uma conta específica.
 
-PUT: http://127.0.0.1:8000/accounts/{id}/
+PUT: http://127.0.0.1:8000/accounts/{account_idd}/
 
 Ação: Atualizar os dados de uma conta específica (somente o próprio usuário pode editar).
 
-DELETE: http://127.0.0.1:8000/accounts/{id}/
+DELETE: http://127.0.0.1:8000/accounts/{account_id}/
 
 Ação: Excluir uma conta específica (somente o próprio usuário pode excluir).
 
@@ -155,17 +155,17 @@ POST: http://127.0.0.1:8000/posts/
 
 Ação: Criar uma nova postagem.
 
-GET: http://127.0.0.1:8000/posts/{id}/
+GET: http://127.0.0.1:8000/posts/{posts_id}/
 
 Ação: Recuperar os detalhes de uma postagem específica.
 
-PUT: http://127.0.0.1:8000/posts/{id}/
+PUT: http://127.0.0.1:8000/posts{posts_id}/
 
-Ação: Atualizar uma postagem específica (somente o autor pode editar).
+Ação: Atualizar uma postagem específica (somente o autor pode editar sua respectva postagem).
 
-DELETE: http://127.0.0.1:8000/posts/{id}/
+DELETE: http://127.0.0.1:8000/posts/{posts_id}/
 
-Ação: Excluir uma postagem específica (somente o autor pode excluir).
+Ação: Excluir uma postagem específica (somente o autor pode excluir sua respectva postagem).
 
 POST: http://127.0.0.1:8000/posts/{id}/like/
 
@@ -179,7 +179,7 @@ GET: http://127.0.0.1:8000/postfeeds/
 
 Ação: Recuperar todas as postagens do feed.
 
-GET: http://127.0.0.1:8000/postfeeds/{account_id}/
+GET: http://127.0.0.1:8000/accounts/{account_id}/postfeeds/
 
 Ação: Recuperar o feed de postagens de um usuário específico.
 
@@ -206,6 +206,10 @@ Ação: Atualizar um comentário específico (somente o autor pode editar).
 DELETE: http://127.0.0.1:8000/comments/{id}/
 
 Ação: Excluir um comentário específico (somente o autor pode excluir).
+
+GET http://127.0.0.1:8000/comments/post/{post_id}/
+
+Ação: Recupera todos os comentários de um post específico.
 
 ---
 
