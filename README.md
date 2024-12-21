@@ -94,25 +94,29 @@ A estrutura básica do projeto está organizada da seguinte forma:
   
 - Git bash:
   
-`source '/caminho/para/seu/pplataforma-v-eject-back-end/venv/Scripts/activate'`
+`source '/caminho/para/seu/plataforma-v-eject-back-end/venv/Scripts/activate'`
   
 5. Instale as dependências:
 
 `pip install -r requirements.txt`
   
-5. Aplique as migrações:
+6. Crie as migrações:
+
+`python manage.py makemigrations`
+
+7. Aplique as migrações:
   
 `python manage.py migrate`
   
-6. Crie um superusuário:
+8. Crie um superusuário:
   
 `python manage.py createsuperuser`
 
-7. Execute o servidor de desenvolvimento:
+9. Execute o servidor de desenvolvimento:
 
 `python manage.py runserver`
   
-8. Acesse o projeto:
+10. Acesse o projeto:
   
 `http://127.0.0.1:8000/`
   
