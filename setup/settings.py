@@ -39,7 +39,8 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
     'plataformav',
     'rest_framework',
-    #'rest_framework_simplejwt',
+    'rest_framework_simplejwt',
+    'drf_yasg',
 ]
 
 MIDDLEWARE = [
@@ -127,7 +128,6 @@ DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
 REST_FRAMEWORK = {
     'DEFAULT_AUTHENTICATION_CLASSES': [
-        #Escolhi utilizar o próprio Django Admin para utilizar os métodos de segurança. Caso não seja interessante, esse novo método de segurança pode ser ativado e o JWT pode ser utilizado.
         #'rest_framework_simplejwt.authentication.JWTAuthentication',
         'rest_framework.authentication.BasicAuthentication',                
     ],
