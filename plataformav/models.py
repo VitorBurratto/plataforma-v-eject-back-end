@@ -24,8 +24,9 @@ def create_user_for_account(account): # Função para criar um usuário no model
     group_name = 'Commons Users' # Nome do grupo de usuários comuns
     group, created = Group.objects.get_or_create(name=group_name)  # Cria ou obtém o grupo 'Commons Users'
 
+    username = account.email.split('@')[0]
     if User.objects.filter(username=username).exists():  # Verifica se o nome de usuário já existe
-        username = f"{account.email.split('@')[0]}_{random.randint(1000, 9999)}" # Gera um nome de usuário único
+        username = f"{username}_{random.randint(1000, 9999)}" # Gera um nome único
 
     user = User.objects.create_user(
         username=username, # Cria o usuário com o nome de usuário gerado
@@ -51,21 +52,32 @@ class Post(models.Model):
         ('I+D+C', 'Imagem, Descrição e Comentários'),
     )
 
-    code = models.CharField(max_length=10, verbose_name='Código', blank=True, editable=False)# Código único para identificar o post
+    code = models.CharField(max_length=10, verbose_name='Código', blank=True, editable=False) # Código único para identificar o post
     description = models.CharField(max_length=100, blank=True, verbose_name='Descrição') # Descrição opcional
-    image = models.ImageField(upload_to='post_images/', verbose_name='Imagem', blank=True) # Imagem associada ao post (armazenada em 'post_images/')
+    image = models.ImageField(upload_to='post_images/', verbose_name='Imagem', blank=True)
     postType = models.CharField(max_length=5, choices=postTypeChoices, default='I', verbose_name='Tipo de Post') # Tipo do post com base nas opções definidas
-    account = models.ForeignKey(Account, on_delete=models.CASCADE, null=True, related_name='posts')  #Conta que criou o post
-    likes = models.PositiveIntegerField(default=0, editable=False) # Número de curtidas no post não editável manualment
-    comments = models.TextField(verbose_name='Comentários', blank=True, editable=False) # Comentários do post
-    
-def __str__(self):
-    return self.code
+    account = models.ForeignKey(Account, on_delete=models.CASCADE, null=True, related_name='posts')  # Conta que criou o post
+    likes = models.PositiveIntegerField(default=0, editable=False)
+    comments = models.TextField(verbose_name='Comentários', blank=True, editable=False) 
 
-def save(self, *args, **kwargs):
-    if not self.code:  # Se o código não estiver definido
-        self.code = ''.join(random.choices(string.ascii_letters + string.digits, k=10))  # Gera um código único
-    super().save(*args, **kwargs)
+    def __str__(self):
+        return self.code
+
+    def save(self, *args, **kwargs):
+        if not self.code:  # Se o código não estiver definido
+            self.code = ''.join(random.choices(string.ascii_letters + string.digits, k=10))  # Gera um código único
+        super().save(*args, **kwargs)
+
+# Modelo para armazenar as curtidas (likes) em posts
+class Like(models.Model):
+    user = models.ForeignKey(User, on_delete=models.CASCADE)  # Relaciona o like ao usuário
+    post = models.ForeignKey(Post, on_delete=models.CASCADE)  # Relaciona o like ao post
+
+    class Meta:
+        unique_together = ('user', 'post')  # Garante que um usuário só possa curtir um post uma vez
+
+    def __str__(self):
+        return f"Like de {self.user.username} no post {self.post.code}"
 
 # Modelo que representa o feed de posts
 class PostFeed(models.Model):
@@ -81,12 +93,13 @@ class Comment(models.Model):
     account = models.ForeignKey(Account, on_delete=models.CASCADE, related_name='comments')  # Relacionamento com a conta
     content = models.TextField(verbose_name='Conteúdo do Comentário')
     createdAt = models.DateTimeField(auto_now_add=True)
+
     def __str__(self):
-        return f"Comentário de {self.account.name} no Post {self.post.code}" 
+        return f"Comentário de {self.account.name} no Post {self.post.code}"
 
 # Sinal que cria automaticamente um PostFeed
 @receiver(post_save, sender=Post)
 def createPostFeed(sender, instance, created, **kwargs):
     if created:
         if instance.account:  # Certifica-se de que há uma conta associada ao post
-            PostFeed.objects.create(account=instance.account, post=instance) 
+            PostFeed.objects.create(account=instance.account, post=instance)
