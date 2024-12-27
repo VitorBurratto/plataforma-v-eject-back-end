@@ -6,7 +6,7 @@ Este projeto consiste no desenvolvimento do back-end de uma API para uma platafo
 
 ## 🔧 Funcionalidades do Projeto
 
-O sistema back-end oferece suporte às seguintes funcionalidades:
+O sistema back-end oferece suporte as seguintes funcionalidades:
 
 -  **Autenticação de Usuários:** Sistema de login, criação de contas e autenticação JWT (JSON Web Token).
 
@@ -40,9 +40,10 @@ O back-end foi construído utilizando as seguintes tecnologias:
 
 A estrutura básica do projeto está organizada da seguinte forma:
 
-    plataforma-backend/
+    plataforma-v-eject-back-end/
     ├── plataformav/ # Diretório principal do app 
-    ├── migrations/ # Migrações do banco de dados
+    ├── migrations/
+    ├── tests/
     ├── init.py
     ├── admin.py # Configurações do admin do Django
     ├── apps.py
@@ -139,7 +140,7 @@ GET: http://127.0.0.1:8000/accounts/{account_id}/
 
 Ação: Recuperar os detalhes de uma conta específica.
 
-PUT: http://127.0.0.1:8000/accounts/{account_idd}/
+PUT: http://127.0.0.1:8000/accounts/{account_id}/
 
 Ação: Atualizar os dados de uma conta específica (somente o próprio usuário pode editar).
 
@@ -234,15 +235,27 @@ O projeto inclui testes unitários para verificar o funcionamentos correto das p
   
 `python manage.py test`
 
-- Autenticação de Usuários: Testes para verificar o registro de novos usuários, login e geração de tokens JWT.
+**- Modelos:**
 
-- CRUD de Postagens: Testes para criação, edição, exclusão e recuperação de postagens.
+- Account: Verificação dos atributos adminUsername, password, name, email, cpf e cellphone.
 
-- Comentários: Verificação da criação e edição de comentários em postagens.
+- Post: Verificação dos atributos description e relação com o modelo Account.
 
-- Paginação no Feed: Testes para garantir que a paginação funciona conforme esperado no endpoint do feed.
+- Like: Validação da relação entre o User e o Post.
 
-- Permissões: Testes para verificar se as ações de edição e exclusão são limitadas aos autores das postagens/comentários.
+- PostFeed: Verificação da relação entre o Account e o Post.
+
+- Comment: Validação dos atributos post, account e content.
+
+**-Serialização:**
+
+- AccountSerializer: Verificação dos campos id, adminUsername, password, name, email, cpf, cellphone, dateBirth e user.
+
+- PostSerializer: Verificação dos campos id, description, account, postType, image, code, likes e comments.
+
+- PostFeedSerializer: Verificação dos campos id, account e post.
+
+- CommentSerializer: Verificação dos campos id, post, account, content e createdAt.
 
 
 ## 🧑‍💻Autores  
