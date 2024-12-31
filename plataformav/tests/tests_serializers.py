@@ -8,13 +8,12 @@ class SerializerAccountTestCase(TestCase):
         user = User.objects.create_user(username='user_example', password='password123')
 
         self.account = Account(
-            adminUsername='TesteAdmin',
-            password='senha123',
+            username='TesteUserName',
             name='Teste de Conta',
+            password='senha123',
             email='teste@gmail.com',
             cpf='12345678901',
-            cellphone='(84) 99999-9999',
-
+            cellphone='(84) 99999-9999'
         )
         self.serializer = AccountSerializer(instance=self.account)
     
@@ -22,15 +21,15 @@ class SerializerAccountTestCase(TestCase):
         dados = self.serializer.data
         self.assertEqual(
             set(dados.keys()),
-            set(['id', 'adminUsername', 'password', 'name', 'email', 'cpf', 'cellphone', 'dateBirth', 'user'])
+            set(['id', 'password', 'name', 'email', 'cpf', 'cellphone', 'username', 'user'])
         )
 
 class SerializerPostTestCase(TestCase):
     def setUp(self):
         self.account = Account.objects.create(
-            adminUsername='TesteAdmin',
-            password='senha123',
+            username='TesteUserName',
             name='Teste de Conta',
+            password='senha123',
             email='teste@gmail.com',
             cpf='12345678901',
             cellphone='(84) 99999-9999'
@@ -53,9 +52,9 @@ class SerializerPostTestCase(TestCase):
 class SerializerPostFeedTestCase(TestCase):
     def setUp(self):
         self.account = Account.objects.create(
-            adminUsername='TesteAdmin',
-            password='senha123',
+            username='TesteUserName',
             name='Teste de Conta',
+            password='senha123',
             email='teste@gmail.com',
             cpf='12345678901',
             cellphone='(84) 99999-9999'
@@ -83,9 +82,9 @@ class SerializerPostFeedTestCase(TestCase):
 class SerializerCommentTestCase(TestCase):
     def setUp(self):
         self.account = Account.objects.create(
-            adminUsername='TesteAdmin',
-            password='senha123',
+            username='TesteUserName',
             name='Teste de Conta',
+            password='senha123',
             email='teste@gmail.com',
             cpf='12345678901',
             cellphone='(84) 99999-9999'

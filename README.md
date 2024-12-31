@@ -45,7 +45,7 @@ A estrutura básica do projeto está organizada da seguinte forma:
     ├── migrations/
     ├── tests/
     ├── init.py
-    ├── admin.py # Configurações do admin do Django
+    ├── admin.py
     ├── apps.py
     ├── models.py # Modelos de dados (usuarios, postagens, comentários, etc.)
     ├── serializers.py # Serializadores da API
@@ -126,107 +126,77 @@ A estrutura básica do projeto está organizada da seguinte forma:
 
 Aqui estão as rotas principais da API:  
 
-**- Account**
+## Endpoints da API
 
-GET: http://127.0.0.1:8000/accounts/
+### **- Autenticação**
 
-Ação: Recuperar todas as contas de usuários.
+- `POST http://127.0.0.1:8000/token/`
+  - Gerar um token JWT para autenticação.
 
-POST: http://127.0.0.1:8000/accounts/
+- `POST http://127.0.0.1:8000/token/refresh/`
+  - Atualizar o token JWT.
 
-Ação: Criar uma nova conta (somente para superusuários ou administradores).
+### **- Account**
 
-GET: http://127.0.0.1:8000/accounts/{account_id}/
+- `GET http://127.0.0.1:8000/accounts/`
+  - Recuperar todas as contas de usuários.
 
-Ação: Recuperar os detalhes de uma conta específica.
+- `POST http://127.0.0.1:8000/accounts/`
+  - Criar uma nova conta.
 
-PUT: http://127.0.0.1:8000/accounts/{account_id}/
+- `GET http://127.0.0.1:8000/accounts/{account_id}/`
+  - Recuperar os detalhes de uma conta específica.
 
-Ação: Atualizar os dados de uma conta específica (somente o próprio usuário pode editar).
+- `PUT http://127.0.0.1:8000/accounts/{account_id}/`
+  - Atualizar os dados de uma conta específica (somente o próprio usuário pode editar).
 
-DELETE: http://127.0.0.1:8000/accounts/{account_id}/
+- `DELETE http://127.0.0.1:8000/accounts/{account_id}/`
+  - Excluir uma conta específica (somente o próprio usuário pode excluir).
 
-Ação: Excluir uma conta específica (somente o próprio usuário pode excluir).
+### **- Post**
 
----
+- `GET http://127.0.0.1:8000/posts/`
+  - Recuperar todas as postagens.
 
-**- Post**
+- `POST http://127.0.0.1:8000/posts/`
+  - Criar uma nova postagem.
 
-GET: http://127.0.0.1:8000/posts/
+- `GET http://127.0.0.1:8000/posts/{posts_id}/`
+  - Recuperar os detalhes de uma postagem específica.
 
-Ação: Recuperar todas as postagens.
+- `PUT http://127.0.0.1:8000/posts/{posts_id}/`
+  - Atualizar uma postagem específica (somente o autor pode editar sua respectiva postagem).
 
-POST: http://127.0.0.1:8000/posts/
+- `DELETE http://127.0.0.1:8000/posts/{posts_id}/`
+  - Excluir uma postagem específica (somente o autor pode excluir sua respectiva postagem).
 
-Ação: Criar uma nova postagem.
+- `POST http://127.0.0.1:8000/posts/{id}/like/`
+  - Adicionar um "like" à postagem especificada.
 
-GET: http://127.0.0.1:8000/posts/{posts_id}/
+### **- PostFeed**
 
-Ação: Recuperar os detalhes de uma postagem específica.
+- `GET http://127.0.0.1:8000/postfeeds/`
+  - Recuperar todas as postagens do feed.
 
-PUT: http://127.0.0.1:8000/posts{posts_id}/
+- `GET http://127.0.0.1:8000/accounts/{account_id}/postfeeds/`
+  - Recuperar o feed de postagens de um usuário específico.
 
-Ação: Atualizar uma postagem específica (somente o autor pode editar sua respectva postagem).
+### **- Comment**
 
-DELETE: http://127.0.0.1:8000/posts/{posts_id}/
+- `GET http://127.0.0.1:8000/comments/`
+  - Recuperar todos os comentários da plataforma.
 
-Ação: Excluir uma postagem específica (somente o autor pode excluir sua respectva postagem).
+- `POST http://127.0.0.1:8000/commtens/{id}/`
+  - Criar um novo comentário em uma postagem.
 
-POST: http://127.0.0.1:8000/posts/{id}/like/
+- `GET http://127.0.0.1:8000/comments/{id}/`
+  - Recuperar os detalhes de um comentário específico.
 
-Ação: Adicionar um "like" à postagem especificada.
+- `PUT http://127.0.0.1:8000/comments/{id}/`
+  - Atualizar um comentário específico (somente o autor pode editar).
 
----
-
-**- PostFeed**
-
-GET: http://127.0.0.1:8000/postfeeds/
-
-Ação: Recuperar todas as postagens do feed.
-
-GET: http://127.0.0.1:8000/accounts/{account_id}/postfeeds/
-
-Ação: Recuperar o feed de postagens de um usuário específico.
-
----
-
-**- Comment**
-
-GET: http://127.0.0.1:8000/comments/
-
-Ação: Recuperar todos os comentários da plataforma.
-
-POST: http://127.0.0.1:8000/comments/
-
-Ação: Criar um novo comentário em uma postagem.
-
-GET: http://127.0.0.1:8000/comments/{id}/
-
-Ação: Recuperar os detalhes de um comentário específico.
-
-PUT: http://127.0.0.1:8000/comments/{id}/
-
-Ação: Atualizar um comentário específico (somente o autor pode editar).
-
-DELETE: http://127.0.0.1:8000/comments/{id}/
-
-Ação: Excluir um comentário específico (somente o autor pode excluir).
-
-GET http://127.0.0.1:8000/comments/post/{post_id}/
-
-Ação: Recupera todos os comentários de um post específico.
-
----
-
-**- Autenticação**
-
-POST: http://127.0.0.1:8000/token/
-
-Ação: Gerar um token JWT para autenticação.  
-
-POST: http://127.0.0.1:8000/token/refresh/
-
-Ação: Atualizar o token JWT.
+- `DELETE http://127.0.0.1:8000/comments/{id}/`
+  - Excluir um comentário específico (somente o autor pode excluir).
 
 
 ## ✔️ Testes

@@ -5,16 +5,14 @@ from plataformav.models import Account, Post, Like, PostFeed, Comment
 class ModelAccountTestCase(TestCase):
     def setUp(self):
         self.account = Account.objects.create(
-            adminUsername='TesteAdmin',
-            password='senha123',
+            username='TesteUserName',
             name='Teste de Conta',
+            password='senha123',
             email='teste@gmail.com',
             cpf='12345678901',
             cellphone='(84) 99999-9999'
         )
-
     def test_verifica_atributos_de_account(self):
-        self.assertEqual(self.account.adminUsername, 'TesteAdmin')
         self.assertEqual(self.account.name, 'Teste de Conta')
         self.assertEqual(self.account.email, 'teste@gmail.com')
         self.assertEqual(self.account.cpf,'12345678901')
@@ -23,10 +21,10 @@ class ModelAccountTestCase(TestCase):
 class ModelPostTestCase(TestCase):
     def setUp(self):
         self.account = Account.objects.create(
-            adminUsername='TesteAdmin',
-            password='senha123',
+            username='TesteUserName',
             name='Teste de Conta',
-            email='teste@teste.com',
+            password='senha123',
+            email='teste@gmail.com',
             cpf='12345678901',
             cellphone='(84) 99999-9999'
         )
@@ -46,10 +44,10 @@ class ModelLikeTestCase(TestCase):
             password='senha123'
         )
         self.account = Account.objects.create(
-            adminUsername='TesteAdmin',
-            password='senha123',
+            username='TesteUserName',
             name='Teste de Conta',
-            email='teste@teste.com',
+            password='senha123',
+            email='teste@gmail.com',
             cpf='12345678901',
             cellphone='(84) 99999-9999'
         )
@@ -66,10 +64,10 @@ class ModelLikeTestCase(TestCase):
 class ModelPostFeedTestCase(TestCase):
     def setUp(self):
         self.account = Account.objects.create(
-            adminUsername='TesteAdmin',
-            password='senha123',
+            username='TesteUserName',
             name='Teste de Conta',
-            email='teste@teste.com',
+            password='senha123',
+            email='teste@gmail.com',
             cpf='12345678901',
             cellphone='(84) 99999-9999'
         )
@@ -86,10 +84,10 @@ class ModelPostFeedTestCase(TestCase):
 class ModelCommentTestCase(TestCase):
     def setUp(self):
         self.account = Account.objects.create(
-            adminUsername='TesteAdmin',
-            password='senha123',
+            username='TesteUserName',
             name='Teste de Conta',
-            email='teste@teste.com',
+            password='senha123',
+            email='teste@gmail.com',
             cpf='12345678901',
             cellphone='(84) 99999-9999'
         )
