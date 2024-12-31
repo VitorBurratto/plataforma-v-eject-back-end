@@ -126,8 +126,6 @@ A estrutura básica do projeto está organizada da seguinte forma:
 
 Aqui estão as rotas principais da API:  
 
-## Endpoints da API
-
 ### **- Autenticação**
 
 - `POST http://127.0.0.1:8000/token/`
