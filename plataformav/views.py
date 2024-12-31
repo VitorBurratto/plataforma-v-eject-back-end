@@ -37,11 +37,11 @@ class PostViewSet(viewsets.ModelViewSet):
         
         if existing_like:  # Se já existe uma curtida, descurtir
             existing_like.delete()  # Remove o like
-            post.likes -= 1  # Decrementa o número de curtidas
+            post.likes -= 1 
             action = 'descurtido'
         else:  # Se não existe uma curtida, curtir
             Like.objects.create(user=user, post=post)  # Cria uma nova curtida
-            post.likes += 1  # Incrementa o número de curtidas
+            post.likes += 1  
             action = 'curtido'
 
         post.save()  # Salva as alterações no post
@@ -51,7 +51,7 @@ class PostViewSet(viewsets.ModelViewSet):
 class PostFeedViewSet(viewsets.ModelViewSet):
     queryset = PostFeed.objects.all().order_by("id")
     serializer_class = PostFeedSerializer
-    pagination_class = FeedPagination  # Paginação personalizada
+    pagination_class = FeedPagination
 
 class ListPostFeedView(generics.ListAPIView):
     serializer_class = PostFeedSerializer
@@ -69,15 +69,24 @@ class CommentViewSet(viewsets.ModelViewSet):
     queryset = Comment.objects.all().order_by("id")
     serializer_class = CommentSerializer
 
-    @action(detail=False, methods=["get"], url_path=r'post/(?P<post_id>[^/.]+)')
-    def get_comments_by_post(self, request, post_id=None):
-        comments = Comment.objects.filter(post_id=post_id)
+    # Definir uma ação POST para criar comentário
+    @action(detail=False, methods=["post"], url_path=r'createComment/(?P<post_id>[^/.]+)')
+    def createComment(self, request, post_id=None):
+        try:
+            post = Post.objects.get(id=post_id)
+        except Post.DoesNotExist:
+            return Response({"detail": "Post not found."})
         
-        # Adicionar paginação se necessário
-        page = self.paginate_queryset(comments)
-        if page is not None:
-            serializer = self.get_serializer(page, many=True)
-            return self.get_paginated_response(serializer.data)
-
-        serializer = self.get_serializer(comments, many=True)
+        # Cria o novo comentário associado ao post
+        content = request.data.get("content")
+        if not content:
+            return Response({"detail": "Conteúdo do comentário não fornecido."})
+        
+        comment = Comment.objects.create(
+            content=content,
+            post=post,
+            account=request.user.account  # Assumindo que você tem um relacionamento com a conta
+        )
+        
+        serializer = self.get_serializer(comment)
         return Response(serializer.data)
